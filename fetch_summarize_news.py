@@ -9,7 +9,7 @@ import os
 
 # ==== 設定 ==== #
 RSS_URL = "https://www.nhk.or.jp/rss/news/cat0.xml"
-NEWS_COUNT = 3
+NEWS_COUNT = 10
 API_KEY = os.environ["GOOGLE_API_KEY"]
 MODEL_NAME = "models/gemini-2.0-flash"  # 安定動作用チャットモデル推奨
 
