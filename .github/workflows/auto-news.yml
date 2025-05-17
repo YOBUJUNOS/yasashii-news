@@ -18,6 +18,13 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: カレントディレクトリ確認
+        run: pwd
+
+      - name: 中身一覧確認
+        run: ls -la
+
+
       - name: 依存インストール
         run: pip install -r requirements.txt
 
