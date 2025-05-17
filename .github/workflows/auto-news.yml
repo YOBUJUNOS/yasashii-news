@@ -13,20 +13,22 @@ jobs:
       - name: チェックアウト
         uses: actions/checkout@v3
 
-      - name: Pythonセットアップ
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
       - name: カレントディレクトリ確認
         run: pwd
 
       - name: 中身一覧確認
         run: ls -la
 
+      - name: Pythonセットアップ
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
 
-      - name: 依存インストール
-        run: pip install -r requirements.txt
+      - name: ライブラリを個別インストール
+        run: |
+          pip install feedparser
+          pip install google-generativeai
+
 
       - name: ニュース生成
         run: python fetch_summarize_news.py
