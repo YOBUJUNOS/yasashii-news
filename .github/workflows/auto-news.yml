@@ -29,11 +29,14 @@ jobs:
           pip install feedparser
           pip install google-generativeai
 
-
       - name: ニュース生成
         run: python fetch_summarize_news.py
         env:
           GOOGLE_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: Git Push用の認証設定
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
 
       - name: JSONをコミット＆Push
         run: |
@@ -42,3 +45,4 @@ jobs:
           git add news_*.json
           git commit -m "📦 Auto update: $(date '+%Y-%m-%d')" || echo "No changes"
           git push
+
