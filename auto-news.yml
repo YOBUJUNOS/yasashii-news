@@ -1,0 +1,35 @@
+name: Daily Gemini News Update
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # UTC 0時 = JST 9時
+  workflow_dispatch:
+
+jobs:
+  update-news:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: チェックアウト
+        uses: actions/checkout@v3
+
+      - name: Pythonセットアップ
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: 依存インストール
+        run: pip install -r requirements.txt
+
+      - name: ニュース生成
+        run: python fetch_summarize_news.py
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: JSONをコミット＆Push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add news_*.json
+          git commit -m "📦 Auto update: $(date '+%Y-%m-%d')" || echo "No changes"
+          git push
